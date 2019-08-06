@@ -4,11 +4,11 @@ var db = require('../db');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-  db.query('SELECT * FROM users', [], (err, res) => {
+  db.query('SELECT * FROM users', [], (err, ret) => {
     if (err) {
-      return next(err)
+      res.json({ error: err })
     } else {
-      res.send(res)
+      res.send(ret)
     }
   })
 });
