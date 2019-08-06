@@ -5,7 +5,11 @@ const client = new Client({
     ssl: true,
 });
 
-client.connect();
+client.connect(err => {
+    if (err) {
+        console.error(err.stack);        
+    }
+});
 
 exports.executar = (query, parametros, callback) => {
     client.query(query, parametros, (err, res) => {
