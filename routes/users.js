@@ -6,7 +6,7 @@ var pg = require('./../utils/pg');
 router.get('/', function (req, res, next) {
   pg.executar('select * from users', '', (err, ret) => {
     if (err) {
-      res.send(err);
+      res.status(500).send(err);
     } else {
       res.json(ret);
     }
