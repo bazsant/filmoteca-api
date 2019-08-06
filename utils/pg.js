@@ -9,10 +9,7 @@ client.connect();
 
 exports.executar = (query, parametros, callback) => {
     client.query(query, parametros, (err, res) => {
-        if (err) throw err;
-
-        callback(res);
-
+        callback(err, res);
         client.end();
     });
 }
