@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db');
 
-/* GET users listing. */
 router.get('/', function (req, res, next) {
   db.query('SELECT * FROM users', [], (err, ret) => {
     if (err) {
@@ -11,6 +10,25 @@ router.get('/', function (req, res, next) {
       res.json(ret.rows)
     }
   })
+});
+
+
+router.post('/', function (req, res, next) {
+  db.query('insert into users (name, phone, gender, email, birth) values ($1, $2, $3, $4, $5) RETURNING *',
+    [
+      req.body.name,
+      req.body.phone,
+      req.body.gender,
+      req.body.email,
+      req.body.birth,
+    ]
+    , (err, ret) => {
+      if (err) {
+        res.json({ error: err })
+      } else {
+        res.json(ret.rows)
+      }
+    })
 });
 
 // router.get('/create', function (req, res, next) {
