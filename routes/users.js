@@ -31,6 +31,39 @@ router.post('/', function (req, res, next) {
     })
 });
 
+router.put('/', function (req, res, next) {
+  db.query('update users set name = $1, phone = $2, gender = $3, email = $4, birth = $5 where id = $6 RETURNING *',
+    [
+      req.body.name,
+      req.body.phone,
+      req.body.gender,
+      req.body.email,
+      req.body.birth,
+      req.body.id,
+    ]
+    , (err, ret) => {
+      if (err) {
+        res.json({ error: err })
+      } else {
+        res.json(ret.rows)
+      }
+    })
+});
+
+router.delete('/', function (req, res, next) {
+  db.query('delete from users where id = $1 RETURNING *',
+    [
+      req.body.id,
+    ]
+    , (err, ret) => {
+      if (err) {
+        res.json({ error: err })
+      } else {
+        res.json(ret.rows)
+      }
+    })
+});
+
 // router.get('/create', function (req, res, next) {
 //   db.query(`CREATE TABLE users (
 //     id bigserial primary key,
