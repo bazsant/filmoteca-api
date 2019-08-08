@@ -50,10 +50,10 @@ router.put('/', function (req, res, next) {
     })
 });
 
-router.delete('/', function (req, res, next) {
+router.delete('/:id', function (req, res, next) {
   db.query('delete from users where id = $1 RETURNING *',
     [
-      req.body.id,
+      req.params.id,
     ]
     , (err, ret) => {
       if (err) {
