@@ -3,7 +3,17 @@ var router = express.Router();
 var db = require('../db');
 
 router.get('/', function (req, res, next) {
-  db.query('SELECT * FROM users', [], (err, ret) => {
+  db.query('SELECT id, name, phone, gender, email, birth FROM users', [], (err, ret) => {
+    if (err) {
+      res.json({ error: err })
+    } else {
+      res.json(ret.rows)
+    }
+  })
+});
+
+router.get('/:id', function (req, res, next) {  
+  db.query('SELECT id, name, phone, gender, email, birth FROM users where id = $1', [req.params.id], (err, ret) => {
     if (err) {
       res.json({ error: err })
     } else {
